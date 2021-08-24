@@ -10,6 +10,7 @@
 .idea/**/shelf
 .idea
 bin
+**.jar
 
 # AWS User-specific
 .idea/**/aws.xml
