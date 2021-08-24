@@ -2,6 +2,10 @@ package com.cider.Engine.Utils.Graphics.Window;
 
 import com.cider.Engine.Errors.LWJGL_Error;
 import com.cider.Engine.Utils.Controls.KeyListener;
+import com.cider.Engine.Utils.General.Time;
+import com.cider.Engine.Utils.Scene.LevelEditorScene;
+import com.cider.Engine.Utils.Scene.LevelScene;
+import com.cider.Engine.Utils.Scene.SceneManager;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -21,12 +25,39 @@ public class Window {
   String title;
   long monitor, share;
 
+  public float r = 1.0f;
+  public float g = 1.0f;
+  public float b = 1.0f;
+  public float a = 1.0f;
+
+  float beginTime = Time.getTime();
+  float endTime;
+  float dt = -1.0f;
+
+  private static SceneManager currentScene;
+
   public Window(int width, int height, String title, long monitor, long share) {
     this.width = width;
     this.height = height;
     this.title = title;
     this.monitor = monitor;
     this.share = share;
+  }
+
+  public static void changeScene(int newScene) {
+    switch (newScene) {
+      case 0:
+        currentScene = new LevelEditorScene();
+        break;
+
+      case 1:
+        currentScene = new LevelScene();
+        break;
+
+      default:
+        assert false : "Unknown scene: " + newScene;
+        break;
+    }
   }
 
   public void stop() {
@@ -61,6 +92,8 @@ public class Window {
     glfwSwapInterval(1);
     glfwShowWindow(window);
     GL.createCapabilities();
+
+    Window.changeScene(0);
   }
 
   public void setKeyCallbacks() {
@@ -71,17 +104,23 @@ public class Window {
   }
 
   public void loop() {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
+    if (dt >= 0) {
+      currentScene.update(dt, this);
+    }
 
     if (KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)) {
       glfwSetWindowShouldClose(window, true);
     }
+    glClearColor(r, g, b, a);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glfwSwapBuffers(window);
 
     glfwPollEvents();
+
+    endTime = Time.getTime();
+    dt = endTime - beginTime;
+    beginTime = endTime;
   }
 
   private void ManageMemoryAndCenterWindow() {
