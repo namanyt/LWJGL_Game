@@ -20,21 +20,18 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-  private long window;
-  int width, height;
-  String title;
-  long monitor, share;
-
+  private static SceneManager currentScene;
   public float r = 1.0f;
   public float g = 1.0f;
   public float b = 1.0f;
   public float a = 1.0f;
-
+  int width, height;
+  String title;
+  long monitor, share;
   float beginTime = Time.getTime();
   float endTime;
   float dt = -1.0f;
-
-  private static SceneManager currentScene;
+  private long window;
 
   public Window(int width, int height, String title, long monitor, long share) {
     this.width = width;
@@ -97,10 +94,10 @@ public class Window {
   }
 
   public void setKeyCallbacks() {
-    glfwSetCursorPosCallback    (window, com.cider.Engine.Utils.Controls.MouseListener::mousePosCallback);
-    glfwSetMouseButtonCallback  (window, com.cider.Engine.Utils.Controls.MouseListener::mouseButtonCallback);
-    glfwSetScrollCallback       (window, com.cider.Engine.Utils.Controls.MouseListener::mouseScrollCallback);
-    glfwSetKeyCallback          (window, com.cider.Engine.Utils.Controls.KeyListener::keyCallback);
+    glfwSetCursorPosCallback(window, com.cider.Engine.Utils.Controls.MouseListener::mousePosCallback);
+    glfwSetMouseButtonCallback(window, com.cider.Engine.Utils.Controls.MouseListener::mouseButtonCallback);
+    glfwSetScrollCallback(window, com.cider.Engine.Utils.Controls.MouseListener::mouseScrollCallback);
+    glfwSetKeyCallback(window, com.cider.Engine.Utils.Controls.KeyListener::keyCallback);
   }
 
   public void loop() {

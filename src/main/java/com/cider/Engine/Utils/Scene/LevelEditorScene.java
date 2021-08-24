@@ -1,10 +1,9 @@
 package com.cider.Engine.Utils.Scene;
 
 import com.cider.Engine.Utils.Controls.KeyListener;
-import com.cider.Engine.Utils.Logger.Logger;
 import com.cider.Engine.Utils.Graphics.Window.Window;
+import com.cider.Engine.Utils.Logger.Logger;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class LevelEditorScene extends SceneManager {
