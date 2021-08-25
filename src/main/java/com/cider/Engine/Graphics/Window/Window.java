@@ -7,11 +7,16 @@ import com.cider.Engine.Scene.LevelEditorScene;
 import com.cider.Engine.Scene.LevelScene;
 import com.cider.Engine.Scene.SceneManager;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.system.MemoryStack;
+
+import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -114,6 +119,23 @@ public class Window {
     endTime = Time.getTime();
     dt = endTime - beginTime;
     beginTime = endTime;
+  }
+
+  private void ManageMemoryAndCenterWindow() {
+    try (MemoryStack stack = stackPush()) {
+      IntBuffer pWidth = stack.mallocInt(1); // int*
+      IntBuffer pHeight = stack.mallocInt(1); // int*
+
+      glfwGetWindowSize(window, pWidth, pHeight);
+
+      GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+      glfwSetWindowPos(
+              window,
+              (vidmode.width() - pWidth.get(0)) / 2,
+              (vidmode.height() - pHeight.get(0)) / 2
+      );
+    }
   }
 
   public long getWindow() {

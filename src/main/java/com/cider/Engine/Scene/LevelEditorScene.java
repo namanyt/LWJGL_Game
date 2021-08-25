@@ -3,6 +3,7 @@ package com.cider.Engine.Scene;
 import com.cider.Engine.Camera.Camera;
 import com.cider.Engine.Graphics.Shaders.Shader;
 import com.cider.Engine.Graphics.Window.Window;
+import com.cider.Engine.Utils.General.Time;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
@@ -44,7 +45,7 @@ public class LevelEditorScene extends SceneManager {
   @Override
   public void init() {
     this.camera = new Camera(new Vector2f(-200, -300));
-    defaultShader = new Shader("src/main/java/com/cider/Engine/Graphics/Shaders/GLSL/default.glsl");
+    defaultShader = new Shader("assets/shader/default.glsl");
     defaultShader.compile();
 
     // ============================================================
@@ -90,6 +91,7 @@ public class LevelEditorScene extends SceneManager {
     defaultShader.use();
     defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
     defaultShader.uploadMat4f("uView", camera.getViewMatrix());
+    defaultShader.uploadFloat("uTime", Time.getTime());
     // Bind the VAO that we're using
     glBindVertexArray(vaoID);
 
