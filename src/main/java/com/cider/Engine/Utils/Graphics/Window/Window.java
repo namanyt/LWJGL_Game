@@ -45,10 +45,12 @@ public class Window {
     switch (newScene) {
       case 0:
         currentScene = new LevelEditorScene();
+        currentScene.init();
         break;
 
       case 1:
         currentScene = new LevelScene();
+        currentScene.init();
         break;
 
       default:
@@ -83,8 +85,6 @@ public class Window {
 
     setKeyCallbacks();
 
-    ManageMemoryAndCenterWindow();
-
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
     glfwShowWindow(window);
@@ -101,40 +101,20 @@ public class Window {
   }
 
   public void loop() {
+    glfwPollEvents();
+
+    glClearColor(r, g, b, a);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     if (dt >= 0) {
       currentScene.update(dt, this);
     }
 
-    if (KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)) {
-      glfwSetWindowShouldClose(window, true);
-    }
-    glClearColor(r, g, b, a);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glfwSwapBuffers(window);
-
-    glfwPollEvents();
 
     endTime = Time.getTime();
     dt = endTime - beginTime;
     beginTime = endTime;
-  }
-
-  private void ManageMemoryAndCenterWindow() {
-    try (MemoryStack stack = stackPush()) {
-      IntBuffer pWidth = stack.mallocInt(1); // int*
-      IntBuffer pHeight = stack.mallocInt(1); // int*
-
-      glfwGetWindowSize(window, pWidth, pHeight);
-
-      GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-      glfwSetWindowPos(
-              window,
-              (vidmode.width() - pWidth.get(0)) / 2,
-              (vidmode.height() - pHeight.get(0)) / 2
-      );
-    }
   }
 
   public long getWindow() {

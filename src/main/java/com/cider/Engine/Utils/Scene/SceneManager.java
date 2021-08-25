@@ -6,6 +6,6 @@ public abstract class SceneManager {
   public SceneManager() {
 
   }
-
+  public void init() {}
   public abstract void update(float dt, Window window);
 }
