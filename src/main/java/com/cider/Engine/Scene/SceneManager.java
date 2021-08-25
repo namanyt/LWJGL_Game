@@ -1,11 +1,15 @@
-package com.cider.Engine.Utils.Scene;
+package com.cider.Engine.Scene;
 
-import com.cider.Engine.Utils.Graphics.Window.Window;
+import com.cider.Engine.Camera.Camera;
+import com.cider.Engine.Graphics.Window.Window;
 
 public abstract class SceneManager {
+  protected Camera camera;
+
   public SceneManager() {
 
   }
+
   public void init() {}
   public abstract void update(float dt, Window window);
 }

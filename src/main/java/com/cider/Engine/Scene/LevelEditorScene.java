@@ -1,7 +1,9 @@
-package com.cider.Engine.Utils.Scene;
+package com.cider.Engine.Scene;
 
-import com.cider.Engine.Utils.Graphics.Shaders.Shader;
-import com.cider.Engine.Utils.Graphics.Window.Window;
+import com.cider.Engine.Camera.Camera;
+import com.cider.Engine.Graphics.Shaders.Shader;
+import com.cider.Engine.Graphics.Window.Window;
+import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -15,10 +17,10 @@ public class LevelEditorScene extends SceneManager {
 
   private float[] vertexArray = {
           // position               // color
-          0.5f, -0.5f, 0.0f,       1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
-          -0.5f,  0.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f, // Top left     1
-          0.5f,  0.5f, 0.0f ,      1.0f, 0.0f, 1.0f, 1.0f, // Top right    2
-          -0.5f, -0.5f, 0.0f,       1.0f, 1.0f, 0.0f, 1.0f, // Bottom left  3
+          100.5f, 0.5f, 0.0f,       1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
+          0.5f,  100.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f, // Top left     1
+          100.5f,  100.5f, 0.0f ,      1.0f, 0.0f, 1.0f, 1.0f, // Top right    2
+          0.5f, 0.5f, 0.0f,       1.0f, 1.0f, 0.0f, 1.0f, // Bottom left  3
   };
 
   // IMPORTANT: Must be in counter-clockwise order
@@ -41,7 +43,8 @@ public class LevelEditorScene extends SceneManager {
 
   @Override
   public void init() {
-    defaultShader = new Shader("src/main/java/com/cider/Engine/Utils/Graphics/Shaders/GLSL/default.glsl");
+    this.camera = new Camera(new Vector2f(-200, -300));
+    defaultShader = new Shader("src/main/java/com/cider/Engine/Graphics/Shaders/GLSL/default.glsl");
     defaultShader.compile();
 
     // ============================================================
@@ -81,7 +84,12 @@ public class LevelEditorScene extends SceneManager {
 
   @Override
   public void update(float dt, Window window) {
+    camera.position.x -= dt * 10.0f;
+    camera.position.y -= dt * 2.0f;
+
     defaultShader.use();
+    defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
+    defaultShader.uploadMat4f("uView", camera.getViewMatrix());
     // Bind the VAO that we're using
     glBindVertexArray(vaoID);
 

@@ -1,9 +1,7 @@
 package com.cider.Engine;
 
-import com.cider.Engine.Errors.GLSLFileNotFound;
-import com.cider.Engine.Errors.InvalidToken;
 import com.cider.Engine.Errors.LWJGL_Error;
-import com.cider.Engine.Utils.Graphics.Window.Window;
+import com.cider.Engine.Graphics.Window.Window;
 import com.cider.Engine.Utils.Logger.Logger;
 
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;

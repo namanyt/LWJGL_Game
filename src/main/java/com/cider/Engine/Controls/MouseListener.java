@@ -1,4 +1,4 @@
-package com.cider.Engine.Utils.Controls;
+package com.cider.Engine.Controls;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;

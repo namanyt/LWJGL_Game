@@ -1,6 +1,6 @@
-package com.cider.Engine.Utils.Scene;
+package com.cider.Engine.Scene;
 
-import com.cider.Engine.Utils.Graphics.Window.Window;
+import com.cider.Engine.Graphics.Window.Window;
 
 public class LevelScene extends SceneManager {
   public LevelScene() {

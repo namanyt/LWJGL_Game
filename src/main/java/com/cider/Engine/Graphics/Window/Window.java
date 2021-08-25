@@ -1,26 +1,17 @@
-package com.cider.Engine.Utils.Graphics.Window;
+package com.cider.Engine.Graphics.Window;
 
-import com.cider.Engine.Errors.GLSLFileNotFound;
-import com.cider.Engine.Errors.InvalidToken;
 import com.cider.Engine.Errors.LWJGL_Error;
-import com.cider.Engine.Utils.Controls.KeyListener;
+import com.cider.Engine.Controls.KeyListener;
 import com.cider.Engine.Utils.General.Time;
-import com.cider.Engine.Utils.Logger.Logger;
-import com.cider.Engine.Utils.Scene.LevelEditorScene;
-import com.cider.Engine.Utils.Scene.LevelScene;
-import com.cider.Engine.Utils.Scene.SceneManager;
+import com.cider.Engine.Scene.LevelEditorScene;
+import com.cider.Engine.Scene.LevelScene;
+import com.cider.Engine.Scene.SceneManager;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.system.MemoryStack;
-
-import java.awt.event.KeyEvent;
-import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -98,10 +89,10 @@ public class Window {
   }
 
   public void setKeyCallbacks() {
-    glfwSetCursorPosCallback(window, com.cider.Engine.Utils.Controls.MouseListener::mousePosCallback);
-    glfwSetMouseButtonCallback(window, com.cider.Engine.Utils.Controls.MouseListener::mouseButtonCallback);
-    glfwSetScrollCallback(window, com.cider.Engine.Utils.Controls.MouseListener::mouseScrollCallback);
-    glfwSetKeyCallback(window, com.cider.Engine.Utils.Controls.KeyListener::keyCallback);
+    glfwSetCursorPosCallback(window, com.cider.Engine.Controls.MouseListener::mousePosCallback);
+    glfwSetMouseButtonCallback(window, com.cider.Engine.Controls.MouseListener::mouseButtonCallback);
+    glfwSetScrollCallback(window, com.cider.Engine.Controls.MouseListener::mouseScrollCallback);
+    glfwSetKeyCallback(window, com.cider.Engine.Controls.KeyListener::keyCallback);
   }
 
   public void loop() {
