@@ -11,6 +11,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
+import java.awt.event.KeyEvent;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -108,6 +109,10 @@ public class Window {
 
     if (dt >= 0) {
       currentScene.update(dt, this);
+    }
+
+    if (KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)) {
+      glfwSetWindowShouldClose(window, true);
     }
 
     glfwSwapBuffers(window);
