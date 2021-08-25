@@ -1,6 +1,8 @@
 package com.cider.Engine.Utils.Graphics.Shaders;
 
+import com.cider.Engine.Errors.GLSLFileNotFound;
 import com.cider.Engine.Errors.InvalidToken;
+import com.cider.Engine.Utils.Logger.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -46,7 +48,8 @@ public class Shader {
       }
     } catch (InvalidToken | IOException exception) {
       exception.printStackTrace();
-      assert false : "Error: Could not open file for shader: \n\t" + filePath;
+      Logger.LogError(new GLSLFileNotFound("File Not found: " + filePath));
+      return;
     }
   }
 

@@ -1,8 +1,11 @@
 package com.cider.Engine.Utils.Graphics.Window;
 
+import com.cider.Engine.Errors.GLSLFileNotFound;
+import com.cider.Engine.Errors.InvalidToken;
 import com.cider.Engine.Errors.LWJGL_Error;
 import com.cider.Engine.Utils.Controls.KeyListener;
 import com.cider.Engine.Utils.General.Time;
+import com.cider.Engine.Utils.Logger.Logger;
 import com.cider.Engine.Utils.Scene.LevelEditorScene;
 import com.cider.Engine.Utils.Scene.LevelScene;
 import com.cider.Engine.Utils.Scene.SceneManager;
@@ -67,7 +70,7 @@ public class Window {
     glfwSetErrorCallback(null).free();
   }
 
-  public void init() {
+  public void init() throws LWJGL_Error {
     GLFWErrorCallback.createPrint(System.err).set();
     if (!glfwInit())
       try {
@@ -82,7 +85,7 @@ public class Window {
 
     window = glfwCreateWindow(this.width, this.height, this.title, this.monitor, this.share);
     if (window == NULL)
-      throw new RuntimeException("Failed to create the GLFW window");
+      throw new LWJGL_Error("Failed to create the GLFW window");
 
     setKeyCallbacks();
 

@@ -1,5 +1,8 @@
 package com.cider.Engine;
 
+import com.cider.Engine.Errors.GLSLFileNotFound;
+import com.cider.Engine.Errors.InvalidToken;
+import com.cider.Engine.Errors.LWJGL_Error;
 import com.cider.Engine.Utils.Graphics.Window.Window;
 import com.cider.Engine.Utils.Logger.Logger;
 
@@ -12,7 +15,7 @@ public class Core {
 
   public Core() {
     Logger.LogInfo("Starting Core.");
-    window = new Window(1270, 720, "Game Window", NULL, NULL);
+    window = new Window(1920, 1080, "Game Window", NULL, NULL);
   }
 
   public void stop() {
@@ -21,7 +24,7 @@ public class Core {
     System.exit(0);
   }
 
-  public void run() {
+  public void run() throws LWJGL_Error {
     window.init();
 
     while (!glfwWindowShouldClose(window.getWindow())) {
