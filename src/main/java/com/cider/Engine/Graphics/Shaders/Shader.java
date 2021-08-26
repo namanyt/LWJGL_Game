@@ -15,45 +15,46 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
   private int shaderProgramID;
-  private boolean ShaderUnderUse;
+  private boolean beingUsed = false;
 
   private String vertexSource;
   private String fragmentSource;
-  private String filePath;
+  private String filepath;
 
-  public Shader(String FilePath) {
-    this.filePath = FilePath;
+  public Shader(String filepath) {
+    this.filepath = filepath;
     try {
-      String source = new String(Files.readAllBytes(Paths.get(filePath)));
+      String source = new String(Files.readAllBytes(Paths.get(filepath)));
       String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
 
+      // Find the first pattern after #type 'pattern'
       int index = source.indexOf("#type") + 6;
       int eol = source.indexOf("\r\n", index);
-      String firstString = source.substring(index, eol).trim();
+      String firstPattern = source.substring(index, eol).trim();
 
+      // Find the second pattern after #type 'pattern'
       index = source.indexOf("#type", eol) + 6;
       eol = source.indexOf("\r\n", index);
-      String secondPatter = source.substring(index, eol).trim();
+      String secondPattern = source.substring(index, eol).trim();
 
-      if (firstString.equals("vertex")) {
+      if (firstPattern.equals("vertex")) {
         vertexSource = splitString[1];
-      } else if (firstString.equals("fragment")) {
+      } else if (firstPattern.equals("fragment")) {
         fragmentSource = splitString[1];
       } else {
-        throw new InvalidToken("Unexpected token: \n\t" + firstString);
+        throw new IOException("Unexpected token '" + firstPattern + "'");
       }
 
-      if (secondPatter.equals("vertex")) {
+      if (secondPattern.equals("vertex")) {
         vertexSource = splitString[2];
-      } else if (secondPatter.equals("fragment")) {
+      } else if (secondPattern.equals("fragment")) {
         fragmentSource = splitString[2];
       } else {
-        throw new InvalidToken("Unexpected token: \n\t" + secondPatter);
+        throw new IOException("Unexpected token '" + secondPattern + "'");
       }
-    } catch (InvalidToken | IOException exception) {
-      exception.printStackTrace();
-      Logger.LogError(new GLSLFileNotFound("File Not found: " + filePath));
-      return;
+    } catch(IOException e) {
+      e.printStackTrace();
+      assert false : "Error: Could not open file for shader: '" + filepath + "'";
     }
   }
 
@@ -73,7 +74,7 @@ public class Shader {
     int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
     if (success == GL_FALSE) {
       int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-      System.out.println("ERROR: '" + this.filePath + "'\n\tVertex shader compilation failed.");
+      System.out.println("ERROR: '" + filepath + "'\n\tVertex shader compilation failed.");
       System.out.println(glGetShaderInfoLog(vertexID, len));
       assert false : "";
     }
@@ -88,7 +89,7 @@ public class Shader {
     success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
     if (success == GL_FALSE) {
       int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-      System.out.println("ERROR: '" + this.filePath + "'\n\tFragment shader compilation failed.");
+      System.out.println("ERROR: '" + filepath + "'\n\tFragment shader compilation failed.");
       System.out.println(glGetShaderInfoLog(fragmentID, len));
       assert false : "";
     }
@@ -103,22 +104,23 @@ public class Shader {
     success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
     if (success == GL_FALSE) {
       int len = glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH);
-      System.out.println("ERROR: '" + this.filePath + "'\n\tLinking of shaders failed.");
+      System.out.println("ERROR: '" + filepath + "'\n\tLinking of shaders failed.");
       System.out.println(glGetProgramInfoLog(shaderProgramID, len));
       assert false : "";
     }
   }
 
   public void use() {
-    if (!ShaderUnderUse) {
+    if (!beingUsed) {
+      // Bind shader program
       glUseProgram(shaderProgramID);
-      ShaderUnderUse = true;
+      beingUsed = true;
     }
   }
 
   public void detach() {
     glUseProgram(0);
-    ShaderUnderUse = false;
+    beingUsed = false;
   }
 
   public void uploadMat4f(String varName, Matrix4f mat4) {
@@ -165,5 +167,11 @@ public class Shader {
     int varLocation = glGetUniformLocation(shaderProgramID, varName);
     use();
     glUniform1i(varLocation, val);
+  }
+
+  public void uploadTexture(String varName, int slot) {
+    int varLocation = glGetUniformLocation(shaderProgramID, varName);
+    use();
+    glUniform1i(varLocation, slot);
   }
 }
