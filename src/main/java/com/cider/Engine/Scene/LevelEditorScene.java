@@ -47,6 +47,7 @@ public class LevelEditorScene extends SceneManager {
 
   @Override
   public void init() {
+    this.name = "Level Editor Scene";
     this.camera = new Camera(new Vector2f(-200, -300));
     defaultShader = new Shader("assets/shader/default.glsl");
     defaultShader.compile();

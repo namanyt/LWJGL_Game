@@ -8,6 +8,11 @@ public class LevelScene extends SceneManager {
   }
 
   @Override
+  public void init() {
+    this.name = "Level Scene";
+  }
+
+  @Override
   public void update(float dt, Window window) {
 
   }

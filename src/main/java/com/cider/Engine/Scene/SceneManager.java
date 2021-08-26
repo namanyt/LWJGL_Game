@@ -5,6 +5,7 @@ import com.cider.Engine.Graphics.Window.Window;
 
 public abstract class SceneManager {
   protected Camera camera;
+  public String name;
 
   public SceneManager() {
 

@@ -1,8 +1,7 @@
 package com.cider.Engine.Graphics.Texture;
 
-import com.cider.Engine.Errors.ImageNotFound;
+import com.cider.Engine.Utils.Logger.Logger;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.system.CallbackI;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -12,11 +11,12 @@ import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class Texture {
-  private String filepath;
-  private int texID;
+  private final String filepath;
+  private final int texID;
 
   public Texture(String filepath) {
     this.filepath = filepath;
+    Logger.LogTrace("Loading Textures from: " + this.filepath);
 
     // Generate texture on GPU
     texID = glGenTextures();

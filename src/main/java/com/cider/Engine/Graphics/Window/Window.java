@@ -6,6 +6,8 @@ import com.cider.Engine.Utils.General.Time;
 import com.cider.Engine.Scene.LevelEditorScene;
 import com.cider.Engine.Scene.LevelScene;
 import com.cider.Engine.Scene.SceneManager;
+import com.cider.Engine.Utils.Logger.LogLevel;
+import com.cider.Engine.Utils.Logger.Logger;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -91,6 +93,14 @@ public class Window {
     GL.createCapabilities();
 
     Window.changeScene(0);
+
+    Logger.LogTrace("Creating Window with settings:");
+    Logger.LogTrace("\t1. Width: " + this.width + "px");
+    Logger.LogTrace("\t2. Height: " + this.height + "px");
+    Logger.LogTrace("\t3. Title: " + this.title);
+    Logger.LogTrace("\t4. Monitor: " + this.monitor);
+    Logger.LogTrace("\t5. Share: " + this.share);
+    Logger.LogInfo("Current Scene: " + currentScene.name);
   }
 
   public void setKeyCallbacks() {
@@ -98,6 +108,8 @@ public class Window {
     glfwSetMouseButtonCallback(window, com.cider.Engine.Controls.MouseListener::mouseButtonCallback);
     glfwSetScrollCallback(window, com.cider.Engine.Controls.MouseListener::mouseScrollCallback);
     glfwSetKeyCallback(window, com.cider.Engine.Controls.KeyListener::keyCallback);
+
+    Logger.LogTrace("Creating Key Callbacks");
   }
 
   public void loop() {
