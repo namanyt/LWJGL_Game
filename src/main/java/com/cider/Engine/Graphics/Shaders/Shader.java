@@ -109,10 +109,6 @@ public class Shader {
       System.out.println(glGetProgramInfoLog(shaderProgramID, len));
       assert false : "";
     }
-
-    Logger.LogTrace("Shader Program ID: " + shaderProgramID);
-    Logger.LogTrace("Vertex ID: " + vertexID);
-    Logger.LogTrace("Fragment ID: " + fragmentID);
   }
 
   public void use() {

@@ -59,7 +59,7 @@ public class Logger {
       String timestamp = ConsoleColors.WHITE_BOLD + new SimpleDateFormat("[HH:mm:ss a] ").format(new Date()) + ConsoleColors.RESET;
       String exceptionString = "[" + ConsoleColors.RED_BOLD + error.getClass().getName() + ConsoleColors.RESET + "] ";
       System.out.println(timestamp + CriticalPrefix + exceptionString + error.getMessage());
-//      System.exit(-1);
+      System.exit(-1);
     }
   }
 

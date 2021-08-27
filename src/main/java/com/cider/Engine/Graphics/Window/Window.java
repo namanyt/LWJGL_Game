@@ -2,6 +2,7 @@ package com.cider.Engine.Graphics.Window;
 
 import com.cider.Engine.Errors.LWJGL_Error;
 import com.cider.Engine.Controls.KeyListener;
+import com.cider.Engine.Errors.UnknownScene;
 import com.cider.Engine.Utils.General.Time;
 import com.cider.Engine.Scene.LevelEditorScene;
 import com.cider.Engine.Scene.LevelScene;
@@ -48,15 +49,17 @@ public class Window {
       case 0:
         currentScene = new LevelEditorScene();
         currentScene.init();
+        currentScene.start();
         break;
 
       case 1:
         currentScene = new LevelScene();
         currentScene.init();
+        currentScene.start();
         break;
 
       default:
-        assert false : "Unknown scene: " + newScene;
+        Logger.LogCritical(new UnknownScene("Invalid or Incorrect Scene: " + newScene));
         break;
     }
   }
@@ -86,21 +89,16 @@ public class Window {
       throw new LWJGL_Error("Failed to create the GLFW window");
 
     setKeyCallbacks();
+    ManageMemoryAndCenterWindow();
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
     glfwShowWindow(window);
     GL.createCapabilities();
 
-    Window.changeScene(0);
+    Window.changeScene(3);
 
-    Logger.LogTrace("Creating Window with settings:");
-    Logger.LogTrace("\t1. Width: " + this.width + "px");
-    Logger.LogTrace("\t2. Height: " + this.height + "px");
-    Logger.LogTrace("\t3. Title: " + this.title);
-    Logger.LogTrace("\t4. Monitor: " + this.monitor);
-    Logger.LogTrace("\t5. Share: " + this.share);
-    Logger.LogInfo("Current Scene: " + currentScene.name);
+    Logger.LogInfo("Creating Window");
   }
 
   public void setKeyCallbacks() {
@@ -109,7 +107,7 @@ public class Window {
     glfwSetScrollCallback(window, com.cider.Engine.Controls.MouseListener::mouseScrollCallback);
     glfwSetKeyCallback(window, com.cider.Engine.Controls.KeyListener::keyCallback);
 
-    Logger.LogTrace("Creating Key Callbacks");
+    Logger.LogInfo("Creating Key Callbacks");
   }
 
   public void loop() {

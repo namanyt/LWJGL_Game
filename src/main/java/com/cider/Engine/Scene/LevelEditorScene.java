@@ -1,6 +1,7 @@
 package com.cider.Engine.Scene;
 
 import com.cider.Engine.Camera.Camera;
+import com.cider.Engine.Components.GameObject;
 import com.cider.Engine.Graphics.Shaders.Shader;
 import com.cider.Engine.Graphics.Texture.Texture;
 import com.cider.Engine.Graphics.Window.Window;
@@ -15,8 +16,6 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class LevelEditorScene extends SceneManager {
-  private int vertexID, fragmentID, shaderProgram;
-
   private float[] vertexArray = {
           // position               // color                  // UV Coordinates
           100f,   0f, 0.0f,       1.0f, 0.0f, 0.0f, 1.0f,     1, 1, // Bottom right 0
@@ -93,8 +92,8 @@ public class LevelEditorScene extends SceneManager {
 
   @Override
   public void update(float dt, Window window) {
-    camera.position.x -= dt * 50.0f;
-    camera.position.y -= dt * 20.0f;
+//    camera.position.x -= dt * 50.0f;
+//    camera.position.y -= dt * 20.0f;
 
     defaultShader.use();
 
@@ -122,5 +121,9 @@ public class LevelEditorScene extends SceneManager {
     glBindVertexArray(0);
 
     defaultShader.detach();
+
+    for (GameObject gameObject : this.gameObjects) {
+      gameObject.update(dt);
+    }
   }
 }

@@ -20,7 +20,7 @@ public class Core {
     else                                  logger = new Logger(LogLevel.NoMessage);
 
     Logger.LogSystem("Starting Core.");
-    window = new Window(1920, 1080, "Game Window", NULL, NULL);
+    window = new Window(1270, 720, "Game Window", NULL, NULL);
   }
 
   public void stop() {
@@ -32,7 +32,7 @@ public class Core {
   public void run() throws LWJGL_Error {
     window.init();
 
-    if (mode == ProjectMode.Debug || mode == ProjectMode.Development) Logger.TestLogging();
+//    if (mode == ProjectMode.Debug || mode == ProjectMode.Development) Logger.TestLogging();
 
     while (!glfwWindowShouldClose(window.getWindow())) {
       window.loop();
