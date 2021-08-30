@@ -96,7 +96,7 @@ public class Window {
     glfwShowWindow(window);
     GL.createCapabilities();
 
-    Window.changeScene(3);
+    Window.changeScene(0);
 
     Logger.LogInfo("Creating Window");
   }

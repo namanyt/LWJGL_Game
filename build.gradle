@@ -52,6 +52,7 @@ version '0.1'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -88,6 +89,10 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-opus:3.2.3"
     runtimeOnly "org.lwjgl:lwjgl-stb:3.2.3"
     implementation "org.joml:joml:1.10.1"
+}
+
+dependencies {
+    implementation 'club.minnced:java-discord-rpc:2.0.0'
 }
 
 test {
