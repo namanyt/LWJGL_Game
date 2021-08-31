@@ -1,8 +1,8 @@
 package com.cider.Engine;
 
 public enum ProjectMode {
-  Development,
-  Debug,
-  Release,
-  Distribution
+    Development,
+    Debug,
+    Release,
+    Distribution
 }

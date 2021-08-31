@@ -12,40 +12,40 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Core {
 
-  ProjectMode mode = ProjectMode.Development;
-  Window window;
-  Logger logger;
-  DiscordUtils discordUtils = new DiscordUtils();
+    ProjectMode mode = ProjectMode.Development;
+    Window window;
+    Logger logger;
+    DiscordUtils discordUtils = new DiscordUtils();
 
-  public Core() {
-    if (mode == ProjectMode.Development)  logger = new Logger(LogLevel.TRACE);
-    else if (mode == ProjectMode.Debug)   logger = new Logger(LogLevel.INFO);
-    else                                  logger = new Logger(LogLevel.NoMessage);
+    public Core() {
+        if (mode == ProjectMode.Development) logger = new Logger(LogLevel.TRACE);
+        else if (mode == ProjectMode.Debug) logger = new Logger(LogLevel.INFO);
+        else logger = new Logger(LogLevel.NoMessage);
 
-    discordUtils.init();
-    discordUtils.updateState(GameState.STARTING);
+        discordUtils.init();
+        discordUtils.updateState(GameState.STARTING);
 
-    Logger.LogSystem("Starting Core.");
-    window = new Window(1270, 720, "Game Window", NULL, NULL);
-  }
-
-  public void stop() {
-    window.stop();
-    Logger.LogSystem("Shutting Core.");
-    System.exit(0);
-  }
-
-  public void run() throws LWJGL_Error {
-    window.init();
-
-//    if (mode == ProjectMode.Debug || mode == ProjectMode.Development) Logger.TestLogging();
-    discordUtils.updateState(GameState.IN_MENU);
-
-    while (!glfwWindowShouldClose(window.getWindow())) {
-      window.loop();
+        Logger.LogSystem("Starting Core.");
+        window = new Window(1270, 720, "Game Window", NULL, NULL);
     }
 
-    discordUtils.updateState(GameState.EXITING);
-    stop();
-  }
+    public void stop() {
+        window.stop();
+        Logger.LogSystem("Shutting Core.");
+        System.exit(0);
+    }
+
+    public void run() throws LWJGL_Error {
+        window.init();
+
+//    if (mode == ProjectMode.Debug || mode == ProjectMode.Development) Logger.TestLogging();
+        discordUtils.updateState(GameState.IN_MENU);
+
+        while (!glfwWindowShouldClose(window.getWindow())) {
+            window.loop();
+        }
+
+        discordUtils.updateState(GameState.EXITING);
+        stop();
+    }
 }

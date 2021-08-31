@@ -8,31 +8,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SceneManager {
-  protected Camera camera;
-  public String name;
-  private boolean isRunning = false;
-  protected List<GameObject> gameObjects = new ArrayList<>();
+    protected Camera camera;
+    public String name;
+    private boolean isRunning = false;
+    protected List<GameObject> gameObjects = new ArrayList<>();
 
-  public SceneManager() {
+    public SceneManager() {
 
-  }
-
-  public void start() {
-    for (GameObject gameObject : gameObjects) {
-      gameObject.start();
     }
-    isRunning = true;
-  }
 
-  public void addGameObjectToScene(GameObject gameObject) {
-    if (!isRunning) {
-      gameObjects.add(gameObject);
-    } else {
-      gameObjects.add(gameObject);
-      gameObject.start();
+    public void start() {
+        for (GameObject gameObject : gameObjects) {
+            gameObject.start();
+        }
+        isRunning = true;
     }
-  }
 
-  public void init() {}
-  public abstract void update(float dt, Window window);
+    public void addGameObjectToScene(GameObject gameObject) {
+        if (!isRunning) {
+            gameObjects.add(gameObject);
+        } else {
+            gameObjects.add(gameObject);
+            gameObject.start();
+        }
+    }
+
+    public void init() {
+    }
+
+    public abstract void update(float dt, Window window);
 }

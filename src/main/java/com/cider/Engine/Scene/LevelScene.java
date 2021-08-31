@@ -3,17 +3,17 @@ package com.cider.Engine.Scene;
 import com.cider.Engine.Graphics.Window.Window;
 
 public class LevelScene extends SceneManager {
-  public LevelScene() {
+    public LevelScene() {
 
-  }
+    }
 
-  @Override
-  public void init() {
-    this.name = "Level Scene";
-  }
+    @Override
+    public void init() {
+        this.name = "Level Scene";
+    }
 
-  @Override
-  public void update(float dt, Window window) {
+    @Override
+    public void update(float dt, Window window) {
 
-  }
+    }
 }
